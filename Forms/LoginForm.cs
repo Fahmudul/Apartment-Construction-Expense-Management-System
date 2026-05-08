@@ -16,6 +16,7 @@ public partial class LoginForm : Form
     private void btnLogin_Click(object sender, EventArgs e)
     {
         // Placeholder navigation — replace with real AuthService.Login() later
+        Console.WriteLine(Environment.GetEnvironmentVariable("DB_SERVER"));
         string email = txtEmail.Text.Trim().ToLower();
         if (email.Contains("admin"))
         {

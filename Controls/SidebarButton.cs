@@ -14,12 +14,14 @@ public class SidebarButton : Control
     private string _emoji = "";
     private string _navLabel = "";
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public string Emoji
     {
         get => _emoji;
         set { _emoji = value; Invalidate(); }
     }
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public string NavLabel
     {
         get => _navLabel;
