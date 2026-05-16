@@ -26,24 +26,24 @@ partial class UserDashboardForm
 
     private void InitializeComponent()
     {
-        Text          = "ApartmentExpense — My Dashboard";
-        Size          = new Size(1280, 820);
-        StartPosition = FormStartPosition.CenterScreen;
-        MinimumSize   = new Size(1000, 600);
-        BackColor     = UITheme.BgPage;
-        Font          = UITheme.FontBase;
+        Text            = "ApartmentExpense — My Dashboard";
+        ClientSize      = new Size(1400, 800);
+        StartPosition   = FormStartPosition.CenterScreen;
+        FormBorderStyle = FormBorderStyle.FixedSingle;
+        MaximizeBox     = false;
+        BackColor       = UITheme.BgPage;
+        Font            = UITheme.FontBase;
 
-        // Sidebar
-        pnlSidebar = new Panel { Dock = DockStyle.Left, Width = 240, BackColor = UITheme.BgSidebar };
+        // Sidebar: 240 x 800
+        pnlSidebar = new Panel { Location = new Point(0, 0), Size = new Size(240, 800), BackColor = UITheme.BgSidebar };
 
         var logoBg = new Panel { Location = new Point(0, 0), Size = new Size(240, 76), BackColor = UITheme.BgSidebar };
-        logoBg.Paint += (s, e) =>
-            e.Graphics.DrawLine(new Pen(Color.FromArgb(26, 51, 71), 1), 0, 75, 240, 75);
+        logoBg.Paint += (s, e) => e.Graphics.DrawLine(new Pen(Color.FromArgb(26, 51, 71), 1), 0, 75, 240, 75);
         var logoIcon = new Label { Text = "🏗", Font = new Font("Segoe UI Emoji", 18f),
             ForeColor = Color.White, BackColor = UITheme.AccentTeal,
             Location = new Point(20, 18), Size = new Size(40, 40), TextAlign = ContentAlignment.MiddleCenter };
-        var logoName = new Label { Text = "ApartmentExp", Font = UITheme.FontSemi,
-            ForeColor = Color.White, BackColor = Color.Transparent, Location = new Point(70, 18), AutoSize = true };
+        var logoName = new Label { Text = "ApartmentExp", Font = UITheme.FontSemi, ForeColor = Color.White,
+            BackColor = Color.Transparent, Location = new Point(70, 18), AutoSize = true };
         var logoSub  = new Label { Text = "My Expenses", Font = UITheme.FontXS,
             ForeColor = Color.FromArgb(100, 116, 139), BackColor = Color.Transparent,
             Location = new Point(70, 40), AutoSize = true };
@@ -72,19 +72,18 @@ partial class UserDashboardForm
         var badgePill = new Label { Text = "USER", Font = UITheme.FontXS, ForeColor = Color.White,
             BackColor = Color.FromArgb(100, 116, 139), Location = new Point(12, 12),
             AutoSize = true, Padding = new Padding(6, 2, 6, 2) };
-        var badgeTxt  = new Label { Text = "Team Member", Font = UITheme.FontSM,
+        var badgeTxt = new Label { Text = "Team Member", Font = UITheme.FontSM,
             ForeColor = Color.FromArgb(203, 213, 225), BackColor = Color.Transparent,
             Location = new Point(64, 14), AutoSize = true };
         badgeBg.Controls.AddRange(new Control[] { badgePill, badgeTxt });
         pnlSidebar.Controls.Add(badgeBg);
 
-        var divider = new Panel { Location = new Point(0, 679), Size = new Size(240, 1),
-            BackColor = Color.FromArgb(26, 51, 71) };
+        var divider = new Panel { Location = new Point(0, 746), Size = new Size(240, 1), BackColor = Color.FromArgb(26, 51, 71) };
         pnlSidebar.Controls.Add(divider);
 
         btnLogout = new Button { Text = "⎋  Logout", Font = UITheme.FontNav,
             ForeColor = UITheme.AccentRed, BackColor = UITheme.BgSidebar, FlatStyle = FlatStyle.Flat,
-            Location = new Point(8, 688), Size = new Size(224, 46),
+            Location = new Point(8, 754), Size = new Size(224, 40),
             TextAlign = ContentAlignment.MiddleLeft, Padding = new Padding(12, 0, 0, 0), Cursor = Cursors.Hand };
         btnLogout.FlatAppearance.BorderSize = 0;
         btnLogout.FlatAppearance.MouseOverBackColor = Color.FromArgb(26, 51, 71);
@@ -92,16 +91,15 @@ partial class UserDashboardForm
         pnlSidebar.Controls.Add(btnLogout);
         Controls.Add(pnlSidebar);
 
-        // Top bar
-        pnlTopBar = new Panel { Dock = DockStyle.Top, Height = 64, BackColor = UITheme.BgCard };
+        // TopBar: x=240, y=0, w=1040, h=64
+        pnlTopBar = new Panel { Location = new Point(240, 0), Size = new Size(1160, 64), BackColor = UITheme.BgCard };
         pnlTopBar.Paint += (s, e) =>
-            e.Graphics.DrawLine(new Pen(UITheme.BorderLight, 1),
-                0, pnlTopBar.Height - 1, pnlTopBar.Width, pnlTopBar.Height - 1);
+            e.Graphics.DrawLine(new Pen(UITheme.BorderLight, 1), 0, 63, 1040, 63);
 
         var pageTitle = UITheme.MakeLabel("My Dashboard", UITheme.FontH3, UITheme.TextPrimary, 24, 20);
         pnlTopBar.Controls.Add(pageTitle);
 
-        var avatar = new Panel { Size = new Size(36, 36), BackColor = Color.Transparent };
+        var avatar = new Panel { Location = new Point(910, 14), Size = new Size(36, 36), BackColor = Color.Transparent };
         avatar.Paint += (s, e) =>
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -110,20 +108,21 @@ partial class UserDashboardForm
                 new SolidBrush(Color.White), new RectangleF(0, 2, 36, 32),
                 new StringFormat { Alignment = StringAlignment.Center });
         };
-        var nameLbl  = UITheme.MakeLabel("Rahima Begum", UITheme.FontSemi, UITheme.TextPrimary, 0, 22);
+        var nameLbl  = UITheme.MakeLabel("Rahima Begum", UITheme.FontSemi, UITheme.TextPrimary, 954, 22);
         var rolePill = new Label { Text = "USER", Font = UITheme.FontXS, ForeColor = Color.White,
-            BackColor = Color.FromArgb(100, 116, 139), AutoSize = true, Padding = new Padding(8, 3, 8, 3) };
-        pnlTopBar.Resize += (s, e) =>
-        {
-            rolePill.Location = new Point(pnlTopBar.Width - rolePill.Width - 24, 22);
-            nameLbl.Location  = new Point(pnlTopBar.Width - rolePill.Width - nameLbl.Width - 50, 22);
-            avatar.Location   = new Point(pnlTopBar.Width - rolePill.Width - nameLbl.Width - 96, 14);
-        };
+            BackColor = Color.FromArgb(100, 116, 139), Location = new Point(1060, 22),
+            AutoSize = true, Padding = new Padding(8, 3, 8, 3) };
         pnlTopBar.Controls.AddRange(new Control[] { avatar, nameLbl, rolePill });
         Controls.Add(pnlTopBar);
 
-        // Content
-        pnlContent = new Panel { Dock = DockStyle.Fill, BackColor = UITheme.BgPage, AutoScroll = true };
+        // Content: x=240, y=64, w=1040, h=736
+        pnlContent = new Panel
+        {
+            Location   = new Point(240, 64),
+            Size       = new Size(1160, 736),
+            BackColor  = UITheme.BgPage,
+            AutoScroll = true,
+        };
         Controls.Add(pnlContent);
     }
 }

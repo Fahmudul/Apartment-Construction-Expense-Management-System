@@ -18,7 +18,21 @@ static class Program
         ApplicationConfiguration.Initialize();
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
-        
-        Application.Run(new LoginForm());
+
+        // Open all screens at once for review
+        //new LoginForm().Show();
+        //new RegisterForm().Show();
+        //new PendingApprovalForm().Show();
+        new AdminDashboardForm().Show();
+        //new AdminExpensesForm().Show();
+        //new AdminCategoriesForm().Show();
+        //new AdminUsersForm().Show();
+        new UserDashboardForm().Show();
+        //new AddExpenseForm().Show();
+        //new PendingApprovalForm().Show();
+        //new UserDetailsForm("John Smith", "john@company.com", "Jan 15, 2025", "Pending").Show();
+
+        // Keep app running until all windows closed
+        Application.Run();
     }
 }
