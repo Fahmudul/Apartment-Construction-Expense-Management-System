@@ -1,2 +1,6 @@
+﻿
+
 USE ApartmentExpenseDB;
-select * from Users;
+GO
+
+SELECT CategoryID, CategoryName, Description from Categories
