@@ -27,7 +27,7 @@ static class Program
         //new AdminExpensesForm().Show();
         //new AdminCategoriesForm().Show();
         //new AdminUsersForm().Show();
-        new UserDashboardForm().Show();
+        //new UserDashboardForm().Show();
         //new AddExpenseForm().Show();
         //new PendingApprovalForm().Show();
         //new UserDetailsForm("John Smith", "john@company.com", "Jan 15, 2025", "Pending").Show();

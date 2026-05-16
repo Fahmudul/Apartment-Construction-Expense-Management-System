@@ -14,14 +14,37 @@ public static class CategoryService
     {
         var categories = new List<Category>();
 
-        try
-        {
+        try {
             using var conn = DatabaseHelper.GetSqlConnection();
+
             conn.Open();
+
+            string query = "SELECT CategoryID, CategoryName, Description from Categories";
+
+            using var cmd = new SqlCommand(query, conn);
+
+            using var response = cmd.ExecuteReader();
+
+            while (response.Read()) {
+                var category = new Category { 
+                    CategoryID = response.GetGuid(response.GetOrdinal("CategoryID")),
+                    CategoryName = response.GetString(response.GetOrdinal("CategoryName")),
+                    Description = response.IsDBNull(response.GetOrdinal("Description"))
+                    ? null :
+                    response.GetString(response.GetOrdinal("Description"))
+                };
+
+                categories.Add(category);
+
+                Console.WriteLine($"Category name {category.CategoryName} description {category.Description}");
+            
+            }
+    
+
         }
-        catch (Exception ex)
-        {
-            MessageBox.Show("Error: " + ex.Message);
+        catch (Exception e) {
+            MessageBox.Show($"Error occured {e.Message}");
+        
         }
 
         return categories;
