@@ -12,6 +12,7 @@ partial class AdminCategoriesForm
     private TextBox txtCategoryName;
     private TextBox txtCategoryIcon;
     private Button btnAddCategory;
+    internal DataGridView dgvCategories;
 
     protected override void Dispose(bool disposing)
     {
@@ -19,106 +20,162 @@ partial class AdminCategoriesForm
         base.Dispose(disposing);
     }
 
+    //private void InitializeComponent()
+    //{
+    //    // Loaded inside pnlContent: 1040 x 736
+    //    // Margins: 20px each side → usable = 1000px wide
+    //    BackColor = UITheme.BgPage;
+    //    int cx = 20, cy = 20, cw = 1120;
+
+    //    var title = UITheme.MakeLabel("Categories",  UITheme.FontH2, UITheme.TextPrimary, cx, cy);
+    //    var sub   = UITheme.MakeLabel("Manage expense categories for the project",
+    //        UITheme.FontBase, UITheme.TextSecond, cx, cy + 36);
+    //    Controls.AddRange(new Control[] { title, sub });
+    //    cy += 74;
+
+    //    // Layout: list card (680 wide) | gap(20) | form card (300 wide) = 1000
+    //    int listW = 670;
+    //    int formW = 310;
+    //    int cardH = 736 - cy - 20; // 642px
+
+    //    // List card
+    //    var listCard = new Panel { Location = new Point(cx, cy), Size = new Size(listW, cardH), BackColor = Color.White };
+    //    listCard.Paint += (s, e) =>
+    //    {
+    //        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+    //        UITheme.DrawRoundedRect(e.Graphics, new Pen(UITheme.BorderLight, 1), 0, 0, listW - 1, cardH - 1, 12);
+    //    };
+    //    var lh = UITheme.MakeLabel("All Categories", UITheme.FontH3, UITheme.TextPrimary, 20, 14);
+    //    lh.BackColor = Color.Transparent;
+    //    var ld = UITheme.MakeDivider(0, 56, listW);
+    //    listCard.Controls.AddRange(new Control[] { lh, ld });
+
+    //    // DataGridView for categories
+    //    dgvCategories = UITheme.MakeDataGrid(0, 57, listW, cardH - 57);
+    //    dgvCategories.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Icon",          FillWeight = 8,  Name = "colIcon" });
+    //    dgvCategories.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Category Name", FillWeight = 36, Name = "colName" });
+    //    dgvCategories.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Description",   FillWeight = 34, Name = "colDesc" });
+    //    dgvCategories.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Edit",          FillWeight = 11, Name = "colEdit",
+    //        Text = "Edit", UseColumnTextForButtonValue = true });
+    //    dgvCategories.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Delete",        FillWeight = 11, Name = "colDelete",
+    //        Text = "Delete", UseColumnTextForButtonValue = true });
+    //    listCard.Controls.Add(dgvCategories);
+    //    Controls.Add(listCard);
+
+    //    // Form card
+    //    var formCard = new Panel
+    //    {
+    //        Location  = new Point(cx + listW + 20, cy),
+    //        Size      = new Size(formW, 290),
+    //        BackColor = Color.White,
+    //    };
+    //    formCard.Paint += (s, e) =>
+    //    {
+    //        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+    //        UITheme.DrawRoundedRect(e.Graphics, new Pen(UITheme.BorderLight, 1), 0, 0, formW - 1, 289, 12);
+    //    };
+
+    //    var fh = UITheme.MakeLabel("Add Category",                 UITheme.FontH3, UITheme.TextPrimary, 20, 18);
+    //    var fs = UITheme.MakeLabel("Create a new expense category", UITheme.FontSM, UITheme.TextMuted,   20, 46);
+    //    fh.BackColor = fs.BackColor = Color.Transparent;
+
+    //    var nl2 = UITheme.MakeLabel("CATEGORY NAME", UITheme.FontLabel, UITheme.TextSecond, 20, 80);
+    //    txtCategoryName = UITheme.MakeTextBox(20, 100, 270); txtCategoryName.PlaceholderText = "e.g. Plumbing";
+
+    //    var il = UITheme.MakeLabel("ICON (Emoji)", UITheme.FontLabel, UITheme.TextSecond, 20, 150);
+    //    txtCategoryIcon = UITheme.MakeTextBox(20, 170, 270); txtCategoryIcon.PlaceholderText = "🏷";
+
+    //    btnAddCategory = UITheme.MakeButton("+ Add Category", UITheme.AccentGreen, Color.White, 20, 222, 270, 42);
+    //    btnAddCategory.Click += btnAddCategory_Click;
+
+    //    formCard.Controls.AddRange(new Control[] { fh, fs, nl2, txtCategoryName, il, txtCategoryIcon, btnAddCategory });
+    //    Controls.Add(formCard);
+    //}
+
     private void InitializeComponent()
     {
-        BackColor  = UITheme.BgPage;
-        AutoScroll = true;
+        // Loaded inside pnlContent: 1160 x 736 (1120 usable width after padding)
+        BackColor = UITheme.BgPage;
+        int cx = 20, cy = 20, cw = 1120;
 
-        int x = 24, y = 24;
-
-        var title = UITheme.MakeLabel("Categories", UITheme.FontH2, UITheme.TextPrimary, x, y);
-        var sub   = UITheme.MakeLabel("Manage expense categories for the project",
-            UITheme.FontBase, UITheme.TextSecond, x, y + 36);
+        var title = UITheme.MakeLabel("Categories", UITheme.FontH2, UITheme.TextPrimary, cx, cy);
+        var sub = UITheme.MakeLabel("Manage expense categories for the project",
+            UITheme.FontBase, UITheme.TextSecond, cx, cy + 36);
         Controls.AddRange(new Control[] { title, sub });
-        y += 76;
+        cy += 74;
 
-        // Category list card
-        var listCard = new Panel { Location = new Point(x, y), Size = new Size(560, 380),
-            BackColor = Color.White };
+        // NEW BALANCED WIDTHS TO FILL 1120px
+        int listW = 770;
+        int formW = 330;
+        int cardH = 736 - cy - 20; // 642px
+
+        // List card
+        var listCard = new Panel { Location = new Point(cx, cy), Size = new Size(listW, cardH), BackColor = Color.White };
         listCard.Paint += (s, e) =>
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            UITheme.DrawRoundedRect(e.Graphics, new Pen(UITheme.BorderLight, 1),
-                0, 0, listCard.Width - 1, listCard.Height - 1, 12);
+            UITheme.DrawRoundedRect(e.Graphics, new Pen(UITheme.BorderLight, 1), 0, 0, listW - 1, cardH - 1, 12);
         };
-
         var lh = UITheme.MakeLabel("All Categories", UITheme.FontH3, UITheme.TextPrimary, 20, 14);
         lh.BackColor = Color.Transparent;
-        var ld = UITheme.MakeDivider(0, 56, 560);
+        var ld = UITheme.MakeDivider(0, 56, listW);
         listCard.Controls.AddRange(new Control[] { lh, ld });
 
-        var cats = new[]
+        // DataGridView for categories (now stretches to 770px wide)
+        dgvCategories = UITheme.MakeDataGrid(0, 57, listW, cardH - 57);
+        dgvCategories.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Icon", FillWeight = 8, Name = "colIcon" });
+        dgvCategories.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Category Name", FillWeight = 36, Name = "colName" });
+        dgvCategories.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Description", FillWeight = 34, Name = "colDesc" });
+        dgvCategories.Columns.Add(new DataGridViewButtonColumn
         {
-            ("🧱", "Materials",  "42 expenses", UITheme.PrimaryLight),
-            ("👷", "Labour",     "28 expenses", Color.FromArgb(209, 250, 229)),
-            ("🔧", "Equipment",  "18 expenses", Color.FromArgb(254, 243, 199)),
-            ("⚡", "Electrical", "15 expenses", Color.FromArgb(254, 226, 226)),
-            ("🚿", "Plumbing",   "10 expenses", Color.FromArgb(224, 242, 254)),
-        };
-
-        int ry = 58; bool alt = false;
-        foreach (var (icon, name, count, iconBg) in cats)
+            HeaderText = "Edit",
+            FillWeight = 11,
+            Name = "colEdit",
+            Text = "Edit",
+            UseColumnTextForButtonValue = true
+        });
+        dgvCategories.Columns.Add(new DataGridViewButtonColumn
         {
-            var row = new Panel { Location = new Point(0, ry), Size = new Size(560, 60),
-                BackColor = alt ? UITheme.BgTableAlt : Color.White };
-            row.Paint += (s, e) =>
-                e.Graphics.DrawLine(new Pen(UITheme.BorderLight, 1), 0, 59, 560, 59);
-
-            var ib = new Panel { Location = new Point(16, 10), Size = new Size(40, 40), BackColor = Color.Transparent };
-            ib.Paint += (s, e) =>
-            {
-                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                UITheme.FillRoundedRect(e.Graphics, new SolidBrush(iconBg), 0, 0, 40, 40, 8);
-                e.Graphics.DrawString(icon, new Font("Segoe UI Emoji", 16f),
-                    new SolidBrush(UITheme.TextPrimary), new RectangleF(0, 4, 40, 32),
-                    new StringFormat { Alignment = StringAlignment.Center });
-            };
-
-            var nl = UITheme.MakeLabel(name,  UITheme.FontSemi, UITheme.TextPrimary, 68, 10);
-            nl.BackColor = Color.Transparent;
-            var cl = UITheme.MakeLabel(count, UITheme.FontSM,   UITheme.TextMuted,   68, 34);
-            cl.BackColor = Color.Transparent;
-
-            var editBtn = UITheme.MakeButton("Edit",   UITheme.PrimaryLight, UITheme.Primary,  384, 14, 68, 32);
-            editBtn.Font = UITheme.FontSM;
-            var delBtn  = UITheme.MakeButton("Delete", UITheme.StatusBlokBg, UITheme.AccentRed, 462, 14, 76, 32);
-            delBtn.Font  = UITheme.FontSM;
-
-            row.Controls.AddRange(new Control[] { ib, nl, cl, editBtn, delBtn });
-            listCard.Controls.Add(row);
-            ry += 60; alt = !alt;
-        }
-
+            HeaderText = "Delete",
+            FillWeight = 11,
+            Name = "colDelete",
+            Text = "Delete",
+            UseColumnTextForButtonValue = true
+        });
+        listCard.Controls.Add(dgvCategories);
         Controls.Add(listCard);
 
-        // Add form card
-        var formCard = new Panel { Location = new Point(x + 584, y), Size = new Size(320, 300),
-            BackColor = Color.White };
+        // Form card (Positions exactly right at X = 20 + 770 + 20 = 810)
+        var formCard = new Panel
+        {
+            Location = new Point(cx + listW + 20, cy),
+            Size = new Size(formW, 290),
+            BackColor = Color.White,
+        };
         formCard.Paint += (s, e) =>
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            UITheme.DrawRoundedRect(e.Graphics, new Pen(UITheme.BorderLight, 1),
-                0, 0, formCard.Width - 1, formCard.Height - 1, 12);
+            UITheme.DrawRoundedRect(e.Graphics, new Pen(UITheme.BorderLight, 1), 0, 0, formW - 1, 289, 12);
         };
 
-        var fh = UITheme.MakeLabel("Add Category",               UITheme.FontH3, UITheme.TextPrimary, 20, 18);
+        var fh = UITheme.MakeLabel("Add Category", UITheme.FontH3, UITheme.TextPrimary, 20, 18);
         var fs = UITheme.MakeLabel("Create a new expense category", UITheme.FontSM, UITheme.TextMuted, 20, 46);
-        fh.BackColor = Color.Transparent;
-        fs.BackColor = Color.Transparent;
+        fh.BackColor = fs.BackColor = Color.Transparent;
 
-        var nl2 = UITheme.MakeLabel("CATEGORY NAME", UITheme.FontLabel, UITheme.TextSecond, 20, 78);
-        txtCategoryName = UITheme.MakeTextBox(20, 98, 280);
-        txtCategoryName.PlaceholderText = "e.g. Plumbing";
+        // Expanded input field widths from 270 to 290 to look clean inside the 330px card
+        var nl2 = UITheme.MakeLabel("CATEGORY NAME", UITheme.FontLabel, UITheme.TextSecond, 20, 80);
+        txtCategoryName = UITheme.MakeTextBox(20, 100, 290); txtCategoryName.PlaceholderText = "e.g. Plumbing";
 
-        var il = UITheme.MakeLabel("ICON (Emoji)", UITheme.FontLabel, UITheme.TextSecond, 20, 148);
-        txtCategoryIcon = UITheme.MakeTextBox(20, 168, 280);
-        txtCategoryIcon.PlaceholderText = "🏷";
+        var il = UITheme.MakeLabel("ICON (Emoji)", UITheme.FontLabel, UITheme.TextSecond, 20, 150);
+        txtCategoryIcon = UITheme.MakeTextBox(20, 170, 290); txtCategoryIcon.PlaceholderText = "🏷";
 
-        btnAddCategory = UITheme.MakeButton("+ Add Category", UITheme.AccentGreen, Color.White, 20, 220, 280, 42);
+        btnAddCategory = UITheme.MakeButton("+ Add Category", UITheme.AccentGreen, Color.White, 20, 222, 290, 42);
         btnAddCategory.Click += btnAddCategory_Click;
 
-        formCard.Controls.AddRange(new Control[]
-        { fh, fs, nl2, txtCategoryName, il, txtCategoryIcon, btnAddCategory });
+        formCard.Controls.AddRange(new Control[] { fh, fs, nl2, txtCategoryName, il, txtCategoryIcon, btnAddCategory });
         Controls.Add(formCard);
     }
+
+
+
 }
