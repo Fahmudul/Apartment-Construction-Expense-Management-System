@@ -115,7 +115,7 @@ partial class RegisterForm
         var lblHave = UITheme.MakeLabel("Already have an account?", UITheme.FontBase, UITheme.TextSecond, 72, 512);
         btnSignIn = new Button { Text = "Sign in", Font = UITheme.FontBase, ForeColor = UITheme.Primary,
             BackColor = Color.White, FlatStyle = FlatStyle.Flat,
-            Location = new Point(256, 509), AutoSize = true, Cursor = Cursors.Hand };
+            Location = new Point(310, 509), AutoSize = true, Cursor = Cursors.Hand };
         btnSignIn.FlatAppearance.BorderSize = 0;
         btnSignIn.Click += btnSignIn_Click;
 

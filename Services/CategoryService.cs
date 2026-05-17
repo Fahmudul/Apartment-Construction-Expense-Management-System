@@ -7,6 +7,8 @@ using ApartmentWinForms.Helpers;
 
 namespace ApartmentWinForms.Services;
 
+
+// Create Read Update Delete
 public static class CategoryService
 {
     // Called when AdminCategoriesForm loads
@@ -53,6 +55,8 @@ public static class CategoryService
     // Called to populate dropdown in AddExpenseForm
     public static List<Category> GetCategoryDropdown()
     {
+
+
         return new List<Category>();
     }
 

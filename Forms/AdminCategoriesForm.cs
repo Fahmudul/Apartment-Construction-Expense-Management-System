@@ -20,7 +20,7 @@ public partial class AdminCategoriesForm : Form
         dgvCategories.Rows.Clear();
 
         foreach(Category category in categories) {
-
+            
             dgvCategories.Rows.Add(
                 
                 category.Icon,
