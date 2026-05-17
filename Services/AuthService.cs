@@ -39,7 +39,10 @@ public static class AuthService
             }       
         }
         catch (Exception e) {
-            MessageBox.Show($"Error occured {e.Message}");
+            MessageBox.Show($"Error occured: {e.Message}",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
         }
 
         return false;
@@ -70,7 +73,7 @@ public static class AuthService
 
             conn.Open();
 
-            string query = "SELECT Email FROM Users WHERE Email LIKE @Email";
+            string query = "SELECT Email FROM Users WHERE Email = @Email";
 
             using var cmd = new SqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@Email", email);
@@ -81,11 +84,59 @@ public static class AuthService
             }
         
         } catch (Exception e) {
-            MessageBox.Show($"Error occured {e.Message}");
-        
+            MessageBox.Show($"Error occured: {e.Message}",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+
         }
 
         return false;
+    
+    }
+
+
+    public static User? GetUserByEmail(string email)
+    {
+        try {
+            using var conn = DatabaseHelper.GetSqlConnection();
+
+            conn.Open();
+
+            string query = "SELECT Name, Email, Role, Password, Status FROM Users WHERE Email = @Email";
+
+            using var cmd = new SqlCommand(query, conn);
+
+            cmd.Parameters.AddWithValue("@Email", email);
+
+            using var userFound = cmd.ExecuteReader();
+            
+            if (userFound.Read()) {
+
+            CurrentUser = new User
+                {
+                    Name = userFound.GetString(userFound.GetOrdinal("Name")),
+                    Email = userFound.GetString(userFound.GetOrdinal("Email")),
+                    Role = userFound.GetString(userFound.GetOrdinal("Role")),
+                    Status = userFound.GetString(userFound.GetOrdinal("Status")),
+                    Password = userFound.GetString(userFound.GetOrdinal("Password"))
+                };
+                
+            
+                Console.WriteLine($"Frome line 114 {CurrentUser.Name}");
+
+                return CurrentUser;
+            }
+                          
+        } catch (Exception e) {
+
+            MessageBox.Show($"Error occured: {e.Message}",
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+        }
+        
+        return null;
     
     }
 }
