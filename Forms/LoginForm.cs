@@ -15,52 +15,23 @@ public partial class LoginForm : Form
     // ── Event Handlers ────────────────────────────────────────
     private void btnLogin_Click(object sender, EventArgs e)
     {
-        // --- Step 1: Get input values ---
+        // Placeholder navigation — replace with real AuthService.Login() later
+        Console.WriteLine(Environment.GetEnvironmentVariable("DB_SERVER"));
         string email = txtEmail.Text.Trim().ToLower();
-        string password = txtPassword.Text.Trim();
-
-        // --- Step 2: Validate ---
-        if ((email == "") || (password == ""))
+        if (email.Contains("admin"))
         {
-            MessageBox.Show("Please enter both email and password.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            return;
-        }
-
-        // --- Step 3: Database & Auth ---
-        bool success = ApartmentWinForms.Services.AuthService.Login(email, password);
-
-        // --- Step 4: UI Update / Navigation ---
-        if (success == false)
-        {
-            MessageBox.Show("Invalid email or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
-        if (ApartmentWinForms.Services.AuthService.CurrentUser.Status == "Pending")
-        {
-            new PendingApprovalForm().Show();
+            var dashboard = new AdminDashboardForm();
+            dashboard.Show();
             Hide();
-            return;
-        }
-        
-        if (ApartmentWinForms.Services.AuthService.CurrentUser.Status == "Blocked")
-        {
-            MessageBox.Show("Your account has been blocked.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            return;
-        }
-
-        if (ApartmentWinForms.Services.AuthService.CurrentUser.Role == "Admin")
-        {
-            new AdminDashboardForm().Show();
         }
         else
         {
-            new UserDashboardForm().Show();
+            var dashboard = new UserDashboardForm();
+            dashboard.Show();
+            Hide();
         }
-        Hide();
     }
 
-    // ── Navigation ────────────────────────────────────────────
     private void btnRegister_Click(object sender, EventArgs e)
     {
         var register = new RegisterForm();

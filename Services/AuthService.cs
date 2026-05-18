@@ -1,120 +1,42 @@
 using ApartmentWinForms.Models;
 using Microsoft.Data.SqlClient;
+using System.Collections.Generic;
 using System;
-using ApartmentWinForms.Helpers;
 
 namespace ApartmentWinForms.Services;
 
 public static class AuthService
 {
-    public static User CurrentUser { get; set; }
+    // Currently logged in user — shared across all forms
+    public static User? CurrentUser { get; set; }
 
-    // ── Login ─────────────────────────────────────────────────
-    public static bool Login(string email, string password)
+    // Called by Login button in LoginForm
+    public static User? Login(string email, string password)
     {
-        // --- Step 1: Validate Inputs ---
-        if ((email == "") || (password == "")) return false;
+        return null;
+    }
 
-        // --- Step 2: Database Operation ---
-        try
-        {
-            using var conn = DatabaseHelper.GetSqlConnection();
-            conn.Open();
-            string query = "SELECT * FROM Users WHERE Email = @Email AND Password = @Password";
-            using var cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@Email", email);
-            cmd.Parameters.AddWithValue("@Password", password); // Note: In production, hash passwords!
-
-            using var reader = cmd.ExecuteReader();
-            if (reader.Read())
-            {
-                CurrentUser = new User
-                {
-                    UserID = (Guid)reader["UserID"],
-                    Name = reader["Name"].ToString(),
-                    Email = reader["Email"].ToString(),
-                    Password = reader["Password"].ToString(),
-                    Role = reader["Role"].ToString(),
-                    Status = reader["Status"].ToString(),
-                    JoinedAt = (DateTime)reader["JoinedAt"]
-                };
-                return true;
-            }
-        }
-        catch (Exception ex)
-        {
-            System.Windows.Forms.MessageBox.Show("Login Error: " + ex.Message);
-        }
+    // Called by Register button in RegisterForm
+    public static bool Register(string name, string email, string password)
+    {
         return false;
     }
 
-    // ── Register ──────────────────────────────────────────────
-    public static bool Register(string name, string email, string password)
-    {
-        // --- Step 1: Validate Inputs ---
-        if (name == "" || email == "" || password == "") return false;
-
-        // --- Step 2: Database Operation ---
-        try
-        {
-            using var conn = DatabaseHelper.GetSqlConnection();
-            conn.Open();
-            string query = "INSERT INTO Users (Name, Email, Password, Role, Status) VALUES (@Name, @Email, @Password, 'User', 'Pending')";
-            using var cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@Name", name);
-            cmd.Parameters.AddWithValue("@Email", email);
-            cmd.Parameters.AddWithValue("@Password", password);
-
-            int rowsAffected = cmd.ExecuteNonQuery();
-            if (rowsAffected > 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-        }
-        catch (Exception ex)
-        {
-            System.Windows.Forms.MessageBox.Show("Registration Error: " + ex.Message);
-            return false;
-        }
-    }
-
-    // ── Logout ────────────────────────────────────────────────
+    // Called by Logout button in any form
     public static void Logout()
     {
         CurrentUser = null;
     }
 
-    // ── Check Approval Status ─────────────────────────────────
+    // Called on startup or after login to check status
     public static bool IsApproved(string email)
     {
-        if (email == "") return false;
-
-        // --- Step 2: Database Operation ---
-        try
-        {
-            using var conn = DatabaseHelper.GetSqlConnection();
-            conn.Open();
-            string query = "SELECT Status FROM Users WHERE Email = @Email";
-            using var cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@Email", email);
-
-            var result = cmd.ExecuteScalar();
-            return result != null && result.ToString() == "Approved";
-        }
-        catch (Exception ex)
-        {
-            System.Windows.Forms.MessageBox.Show("Status Check Error: " + ex.Message);
-            return false;
-        }
+        return false;
     }
 
-    // ── Admin Check ───────────────────────────────────────────
+    // Called to check if logged in user is admin
     public static bool IsAdmin()
     {
-        return CurrentUser?.Role == "Admin";
+        return false;
     }
 }

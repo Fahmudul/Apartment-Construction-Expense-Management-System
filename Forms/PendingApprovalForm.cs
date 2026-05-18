@@ -10,10 +10,8 @@ public partial class PendingApprovalForm : Form
         InitializeComponent();
     }
 
-    // ── Navigation ────────────────────────────────────────────
     private void btnBack_Click(object sender, EventArgs e)
     {
-        // --- Step 1: UI Update / Navigation ---
         var login = new LoginForm();
         login.Show();
         Hide();
