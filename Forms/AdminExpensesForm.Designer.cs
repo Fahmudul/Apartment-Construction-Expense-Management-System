@@ -79,13 +79,18 @@ partial class AdminExpensesForm
 
         // DataGridView fills rest of table card
         dgvExpenses = UITheme.MakeDataGrid(0, 59, cw, tableH - 59);
+        dgvExpenses.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            HeaderText = "ID",
+            Name = "colExpenseID",
+            Visible = false 
+        });
         dgvExpenses.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Title",      FillWeight = 28, Name = "colTitle" });
         dgvExpenses.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Category",   FillWeight = 18, Name = "colCategory" });
+        dgvExpenses.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Added By", FillWeight = 16, Name = "colAddedBy" });
         dgvExpenses.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Amount (৳)", FillWeight = 14, Name = "colAmount" });
         dgvExpenses.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Date",       FillWeight = 12, Name = "colDate" });
-        dgvExpenses.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Added By",   FillWeight = 16, Name = "colAddedBy" });
-        dgvExpenses.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Delete",     FillWeight = 12, Name = "colDelete",
-            Text = "Delete", UseColumnTextForButtonValue = true });
+               
 
         tableCard.Controls.Add(dgvExpenses);
         Controls.Add(tableCard);

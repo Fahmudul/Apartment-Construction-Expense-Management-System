@@ -61,10 +61,7 @@ partial class AddExpenseForm
 
         var lblCat   = UITheme.MakeLabel("CATEGORY",       UITheme.FontLabel, UITheme.TextSecond, 30, 172);
         cmbCategory  = UITheme.MakeComboBox(30, 192, 420);
-        cmbCategory.Items.AddRange(new object[]
-        { "🧱  Materials","👷  Labour","🔧  Equipment",
-          "⚡  Electrical","🪟  Fixtures","🚿  Plumbing","🚛  Transport","📋  Other" });
-        cmbCategory.SelectedIndex = 0;
+        
 
         var lblNote = UITheme.MakeLabel("Select from list only — cannot type a custom category",
             UITheme.FontXS, UITheme.TextMuted, 30, 234);

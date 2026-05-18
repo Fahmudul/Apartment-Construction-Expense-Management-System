@@ -52,6 +52,12 @@ partial class AdminCategoriesForm
 
         // DataGridView for categories (now stretches to 770px wide)
         dgvCategories = UITheme.MakeDataGrid(0, 57, listW, cardH - 57);
+        dgvCategories.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            HeaderText = "ID",
+            Name = "colCategoryID",
+            Visible = false
+        });
         dgvCategories.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Icon", FillWeight = 8, Name = "colIcon" });
         dgvCategories.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Category Name", FillWeight = 36, Name = "colName" });
         dgvCategories.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Description", FillWeight = 34, Name = "colDesc" });

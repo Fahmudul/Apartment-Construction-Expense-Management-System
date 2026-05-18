@@ -18,6 +18,8 @@ obj/
 .DS_Store
 Thumbs.db
 
+.env
+
 # Logs
 *.log
 

@@ -105,12 +105,53 @@ public static class UserService
     // Called for Admin dashboard stat card
     public static int GetTotalUsersCount()
     {
+        try
+        {
+            using var conn = DatabaseHelper.GetSqlConnection();
+            conn.Open();
+
+            string query = "SELECT COUNT(*) FROM Users";
+
+            using var cmd = new SqlCommand(query, conn);
+            int count = (int)cmd.ExecuteScalar();
+
+            if (count > 0)
+            {
+                return count;
+            }
+           
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show("Error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
         return 0;
+      
     }
 
     // Called for pending badge in AdminUsersForm
     public static int GetPendingUsersCount()
     {
+        try
+        {
+            using var conn = DatabaseHelper.GetSqlConnection();
+            conn.Open();
+
+            string query = "SELECT COUNT(*) FROM Users WHERE Status = 'Pending'";
+
+            using var cmd = new SqlCommand(query, conn);
+            int count = (int)cmd.ExecuteScalar();
+
+            if (count > 0)
+            {
+                return count;
+            }
+           
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show("Error occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
         return 0;
     }
 

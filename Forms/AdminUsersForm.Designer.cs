@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using ApartmentWinForms.Helpers;
+using ApartmentWinForms.Services;
 
 namespace ApartmentWinForms.Forms;
 
@@ -19,6 +20,7 @@ partial class AdminUsersForm
 
     private void InitializeComponent()
     {
+        string pendingUsers = UserService.GetPendingUsersCount().ToString();
         // Loaded inside pnlContent: 1040 x 736
         BackColor = UITheme.BgPage;
         int cx = 20, cy = 20, cw = 1120;
@@ -35,7 +37,7 @@ partial class AdminUsersForm
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             UITheme.FillRoundedRect(e.Graphics, new SolidBrush(UITheme.StatusPendBg), 0, 0, 220, 38, 10);
         };
-        var pendTxt = new Label { Text = "⚠️  3 pending approvals",
+        var pendTxt = new Label { Text = $"⚠️  {pendingUsers} pending approvals",
             Font = UITheme.FontSMBold, ForeColor = UITheme.StatusPendFg,
             BackColor = Color.Transparent, Location = new Point(12, 10), AutoSize = true };
         pendBg.Controls.Add(pendTxt);

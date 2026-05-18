@@ -46,13 +46,18 @@ partial class UserExpensesForm
         tableCard.Controls.AddRange(new Control[] { th, td });
 
         dgvExpenses = UITheme.MakeDataGrid(0, 57, cw, tableH - 57);
+        dgvExpenses.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            HeaderText = "ID",
+            Name = "colExpenseID",
+            Visible = false
+        });
         dgvExpenses.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Title",      FillWeight = 30, Name = "colTitle" });
         dgvExpenses.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Category",   FillWeight = 20, Name = "colCategory" });
         dgvExpenses.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Amount (৳)", FillWeight = 16, Name = "colAmount" });
         dgvExpenses.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Date",       FillWeight = 14, Name = "colDate" });
-        dgvExpenses.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Edit",       FillWeight = 10, Name = "colEdit",
-            Text = "Edit", UseColumnTextForButtonValue = true });
-        dgvExpenses.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Delete",     FillWeight = 10, Name = "colDelete",
+        
+        dgvExpenses.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Action",     FillWeight = 10, Name = "colDelete",
             Text = "Delete", UseColumnTextForButtonValue = true });
         dgvExpenses.CellClick += dgvExpenses_CellClick;
 

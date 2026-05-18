@@ -94,7 +94,7 @@ partial class UserDetailsForm
         card.Controls.AddRange(new Control[]
         { avatar, nameLbl, statusBadge, detailBox });
 
-        Console.WriteLine($"From line 97 {role}");
+        //Console.WriteLine($"From line 97 {role}");
        
        if (status == "Pending" && role != "Admin")
         {

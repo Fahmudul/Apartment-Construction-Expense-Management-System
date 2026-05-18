@@ -14,12 +14,7 @@ public partial class RegisterForm : Form
     // ── Event Handlers ────────────────────────────────────────
     private void btnCreate_Click(object sender, EventArgs e)
     {
-
-        Console.WriteLine($"Username {txtName.Text}");
-        Console.WriteLine($"Email {txtEmail.Text}");
-        Console.WriteLine($"Password {txtPassword.Text}");
-        Console.WriteLine($"Confirm Password {txtConfirm.Text}");
-
+                
         string name = txtName.Text;
         string email = txtEmail.Text;
         string password = txtPassword.Text;
@@ -33,23 +28,15 @@ public partial class RegisterForm : Form
         // 5. Check Username, Email, password size is not more than given range
 
         // 1. If all fields are non empty
-        if (!string.IsNullOrWhiteSpace(name) &&
-            !string.IsNullOrWhiteSpace(email) &&
-            !string.IsNullOrWhiteSpace(password) &&
-            !string.IsNullOrWhiteSpace(confirmPassword))      
+        if (string.IsNullOrWhiteSpace(name) &&
+            string.IsNullOrWhiteSpace(email) &&
+            string.IsNullOrWhiteSpace(password) &&
+            string.IsNullOrWhiteSpace(confirmPassword))      
         {
-            Console.WriteLine($"Username {name}");
-            Console.WriteLine($"Email {email}");
-            Console.WriteLine($"Password {password}");
-            Console.WriteLine($"Confirm Password {confirmPassword}");
-        }
-        else
-        {
-            Console.WriteLine("All fields are required.");
             MessageBox.Show("All fields are required!");
             return;
         }
-
+        
         // 3. Check if password and confirm password are not same
         if (password != confirmPassword) {
             MessageBox.Show("Confirm password should match with password!");
