@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using ApartmentWinForms.Helpers;
+using ApartmentWinForms.Services;
 
 namespace ApartmentWinForms.Forms;
 
@@ -15,49 +16,62 @@ public partial class LoginForm : Form
     // ── Event Handlers ────────────────────────────────────────
     private void btnLogin_Click(object sender, EventArgs e)
     {
-        // --- Step 1: Get input values ---
-        string email = txtEmail.Text.Trim().ToLower();
-        string password = txtPassword.Text.Trim();
-
-        // --- Step 2: Validate ---
-        if ((email == "") || (password == ""))
-        {
-            MessageBox.Show("Please enter both email and password.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            return;
-        }
-
-        // --- Step 3: Database & Auth ---
-        bool success = ApartmentWinForms.Services.AuthService.Login(email, password);
-
-        // --- Step 4: UI Update / Navigation ---
-        if (success == false)
-        {
-            MessageBox.Show("Invalid email or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
-        if (ApartmentWinForms.Services.AuthService.CurrentUser.Status == "Pending")
-        {
-            new PendingApprovalForm().Show();
-            Hide();
-            return;
-        }
+        // Placeholder navigation — replace with real AuthService.Login() later
         
-        if (ApartmentWinForms.Services.AuthService.CurrentUser.Status == "Blocked")
-        {
-            MessageBox.Show("Your account has been blocked.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            return;
+        string email = txtEmail.Text.Trim().ToLower();
+        string password = txtPassword.Text.Trim().ToLower();
+        // Check if email and password are not empty
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password)) { 
+            MessageBox.Show("Email or Password can't be empty!","Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning); return;
         }
 
-        if (ApartmentWinForms.Services.AuthService.CurrentUser.Role == "Admin")
+        // check if user exists in DB
+        var user = AuthService.GetUserByEmail(email);
+
+        if (user == null)
         {
-            new AdminDashboardForm().Show();
+            MessageBox.Show($"User not registered with {email}","Warning",MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+         
         }
         else
         {
-            new UserDashboardForm().Show();
+            if (user.Password != password) {
+
+                MessageBox.Show($"Incorrect Password!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Console.WriteLine($"Password {user.Status}");
+
+            if (user.Status == "Approved")
+            {
+                if (user.Role == "Admin")
+                {
+                    var adminDashboard = new AdminDashboardForm();
+                    adminDashboard.Show();
+                    Hide();
+                }
+                else
+                {
+                    var userDashboard = new UserDashboardForm();
+                    userDashboard.Show();
+                    Hide();
+
+                }
+
+            }
+            else if (user.Status == "Pending")
+            {
+                MessageBox.Show($"Wait for admin approval!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else {
+                MessageBox.Show($"You are blocked by admin!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+
+            }
         }
-        Hide();
     }
 
     // ── Navigation ────────────────────────────────────────────

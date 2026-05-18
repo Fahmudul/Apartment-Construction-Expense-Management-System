@@ -21,7 +21,9 @@ static class Program
 
         // Open all screens at once for review
         new LoginForm().Show();
-
+        //new RegisterForm().Show();
+        //new PendingApprovalForm().Show();
+        //new AdminDashboardForm().Show();
         //new AdminExpensesForm().Show();
         //new AdminCategoriesForm().Show();
         //new AdminUsersForm().Show();

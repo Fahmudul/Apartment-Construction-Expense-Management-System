@@ -3,14 +3,17 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using ApartmentWinForms.Helpers;
-
+using ApartmentWinForms.Services;
 namespace ApartmentWinForms.Forms;
 
 partial class UserDetailsForm
 {
     private System.ComponentModel.IContainer components = null;
-    private Button btnApprove;
+    
     private Button btnReject;
+    private Button btnApprove;
+    private Button btnBlock;
+    private Button btnUnblock;
     private Button btnClose;
 
     protected override void Dispose(bool disposing)
@@ -19,7 +22,7 @@ partial class UserDetailsForm
         base.Dispose(disposing);
     }
 
-    private void InitializeComponent(string name, string email, string joined, string status)
+    private void InitializeComponent(string name, string email, string joined, string status, string role)
     {
         Text            = "User Details";
         ClientSize      = new Size(480, 520);
@@ -85,16 +88,49 @@ partial class UserDetailsForm
         }
 
         // Action buttons — row at y=338
-        btnApprove = UITheme.MakeButton("✓ Approve", UITheme.AccentGreen, Color.White,  20, 338, 120, 42);
-        btnReject  = UITheme.MakeButton("✗ Reject",  UITheme.AccentRed,   Color.White, 156, 338, 110, 42);
-        btnClose   = UITheme.MakeOutlineButton("Close",                               282, 338, 110, 42);
-
-        btnApprove.Click += btnApprove_Click;
-        btnReject.Click  += btnReject_Click;
-        btnClose.Click   += btnClose_Click;
+        btnClose = UITheme.MakeOutlineButton("Close", 20, 338, 400, 42);
+        btnClose.Click += btnClose_Click;
 
         card.Controls.AddRange(new Control[]
-        { avatar, nameLbl, statusBadge, detailBox, btnApprove, btnReject, btnClose });
+        { avatar, nameLbl, statusBadge, detailBox });
+
+        Console.WriteLine($"From line 97 {role}");
+       
+       if (status == "Pending" && role != "Admin")
+        {
+            btnClose = UITheme.MakeOutlineButton("Close", 282, 338, 110, 42);
+
+            btnApprove = UITheme.MakeButton("✓ Approve", UITheme.AccentGreen, Color.White, 20, 338, 120, 42);
+            btnReject = UITheme.MakeButton("✗ Reject", UITheme.AccentRed, Color.White, 156, 338, 110, 42);
+
+            btnApprove.Click += btnApprove_Click;
+            btnReject.Click += btnReject_Click;
+            btnClose.Click += btnClose_Click;
+
+            card.Controls.AddRange(new Control[] { avatar, nameLbl, statusBadge, detailBox, btnApprove, btnReject, btnClose });
+        }
+        else if (status == "Approved" && role != "Admin")
+        {
+            btnClose = UITheme.MakeOutlineButton("Close", 240, 338, 160, 42);
+            btnBlock = UITheme.MakeButton("Block", UITheme.AccentAmber, Color.White, 20, 338, 200, 42);
+
+            btnBlock.Click += btnBlock_Click;
+            btnClose.Click += btnClose_Click;
+
+            card.Controls.AddRange(new Control[] { avatar, nameLbl, statusBadge, detailBox, btnBlock, btnClose });
+        }
+        else if(status == "Blocked" && role != "Admin")
+        {
+            btnClose = UITheme.MakeOutlineButton("Close", 240, 338, 160, 42);
+            btnUnblock = UITheme.MakeButton("Unblock", UITheme.AccentGreen, Color.White, 20, 338, 200, 42);
+
+            btnUnblock.Click += btnUnblock_Click;
+            btnClose.Click += btnClose_Click;
+
+            card.Controls.AddRange(new Control[] { avatar, nameLbl, statusBadge, detailBox, btnUnblock, btnClose });
+        }
+
         Controls.Add(card);
+
     }
 }

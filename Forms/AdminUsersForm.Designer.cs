@@ -57,20 +57,30 @@ partial class AdminUsersForm
         tableCard.Controls.AddRange(new Control[] { th, td });
 
         dgvUsers = UITheme.MakeDataGrid(0, 57, cw, tableH - 57);
-        dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Name",     FillWeight = 18, Name = "colName" });
-        dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Email",    FillWeight = 22, Name = "colEmail" });
-        dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Joined",   FillWeight = 13, Name = "colJoined" });
-        dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Status",   FillWeight = 10, Name = "colStatus" });
-        dgvUsers.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Approve",  FillWeight = 12, Name = "colApprove",
-            Text = "✓ Approve", UseColumnTextForButtonValue = true });
-        dgvUsers.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Reject",   FillWeight = 12, Name = "colReject",
-            Text = "✗ Reject", UseColumnTextForButtonValue = true });
-        dgvUsers.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Block",    FillWeight = 10, Name = "colBlock",
-            Text = "Block", UseColumnTextForButtonValue = true });
-        dgvUsers.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Details",  FillWeight = 13, Name = "colDetails",
-            Text = "Details", UseColumnTextForButtonValue = true });
+
+        // Data columns
+        dgvUsers.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            HeaderText = "ID",
+            Name = "colID",
+            Visible = false  // hidden from user
+        });
+        dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Name", FillWeight = 18, Name = "colName" });
+        dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Email", FillWeight = 22, Name = "colEmail" });
+        dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Joined", FillWeight = 13, Name = "colJoined" });
+        dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Status", FillWeight = 10, Name = "colStatus" });
+        dgvUsers.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Role", FillWeight = 10, Name = "colRole" });
+                dgvUsers.Columns.Add(new DataGridViewButtonColumn
+        {
+            HeaderText = "",
+            FillWeight = 13,
+            Name = "colDetails",
+            Text = "Details",
+            UseColumnTextForButtonValue = true
+        });
 
         tableCard.Controls.Add(dgvUsers);
+
         Controls.Add(tableCard);
     }
 }
