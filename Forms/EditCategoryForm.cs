@@ -22,9 +22,9 @@ public partial class EditCategoryForm : Form
                        ? null
                        : txtDescription.Text.Trim();
 
-        Console.WriteLine($"Catgory name {name}");
-        Console.WriteLine($"Icon {icon}");
-        Console.WriteLine($"description {desc}");
+        //Console.WriteLine($"Catgory name {name}");
+        //Console.WriteLine($"Icon {icon}");
+        //Console.WriteLine($"description {desc}");
 
         if (string.IsNullOrEmpty(name))
         {

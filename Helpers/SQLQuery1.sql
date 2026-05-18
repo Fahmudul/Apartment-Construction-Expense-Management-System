@@ -97,5 +97,6 @@
 -- GO
 
 -- UPDATE Users SET Status = 'Pending' where Email = 'rahima@corp.bd';
--- select * from Categories;
+-- select * from Users;
 -- delete from Categories where CategoryID = 'CF7AD22A-05B9-4C9E-B5F7-4B36C9733CF1';
+

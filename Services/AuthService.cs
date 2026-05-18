@@ -126,7 +126,7 @@ public static class AuthService
 
             conn.Open();
 
-            string query = "SELECT Name, Email, Role, Password, Status FROM Users WHERE Email = @Email";
+            string query = "SELECT UserID, Name, Email, Role, Password, Status FROM Users WHERE Email = @Email";
 
             using var cmd = new SqlCommand(query, conn);
 
@@ -139,6 +139,7 @@ public static class AuthService
 
                 CurrentUser = new User
                 {
+                    UserID = userFound.GetGuid(userFound.GetOrdinal("UserID")),
                     Name = userFound.GetString(userFound.GetOrdinal("Name")),
                     Email = userFound.GetString(userFound.GetOrdinal("Email")),
                     Role = userFound.GetString(userFound.GetOrdinal("Role")),

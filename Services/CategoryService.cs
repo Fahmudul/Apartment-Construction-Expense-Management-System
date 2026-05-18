@@ -38,7 +38,7 @@ public static class CategoryService
 
                 categories.Add(category);
 
-                Console.WriteLine($"Category name {category.CategoryName} description {category.Description}");
+                //Console.WriteLine($"Category name {category.CategoryName} description {category.Description}");
             
             }
     
@@ -55,23 +55,25 @@ public static class CategoryService
     // Called to populate dropdown in AddExpenseForm
     public static List<Category> GetCategoryDropdown()
     {
+        var categoryDropdown = new List<Category>();
         try
         {
             using var conn = DatabaseHelper.GetSqlConnection();
             conn.Open();
 
-            string query = "SELECT COUNT(*) FROM Categories";
+            string query = "SELECT CategoryID, CategoryName FROM Categories";
 
             using var cmd = new SqlCommand(query, conn);
-            int count = (int)cmd.ExecuteScalar();
+            using var response = cmd.ExecuteReader();
 
-            if (count > 0)
-            {
-                return new List<Category>();
-            }
-            else
-            {
-                return new List<Category>();
+            while (response.Read()) {
+                categoryDropdown.Add(new Category
+                {
+                    CategoryID = response.GetGuid(response.GetOrdinal("CategoryID")),
+                    CategoryName = response.GetString(response.GetOrdinal("CategoryName"))
+                });
+
+
             }
         }
         catch (Exception e)
@@ -80,7 +82,7 @@ public static class CategoryService
         }
    
 
-        return new List<Category>();
+        return categoryDropdown;
     }
 
     // Called by Add Category button in AdminCategoriesForm
@@ -92,7 +94,7 @@ public static class CategoryService
             using var conn = DatabaseHelper.GetSqlConnection();
 
             conn.Open();
-            Console.WriteLine($"Name {name} icon {icon}");
+            //Console.WriteLine($"Name {name} icon {icon}");
             string query = "INSERT INTO Categories (CategoryName, Icon, Description) Values (@CategoryName, @Icon, @Description)";
 
             using var cmd = new SqlCommand(query, conn);
@@ -103,7 +105,7 @@ public static class CategoryService
             int rowsAffected = cmd.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
-                Console.WriteLine("Category added!");
+                //Console.WriteLine("Category added!");
                 return true;
             }
         }
@@ -139,7 +141,7 @@ public static class CategoryService
             int rowsAffected = cmd.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
-                Console.WriteLine("Category udated!");
+                //Console.WriteLine("Category udated!");
                 return true;
             }
         }
@@ -171,7 +173,7 @@ public static class CategoryService
             int rowsAffected = cmd.ExecuteNonQuery();
             if (rowsAffected > 0)
             {
-                Console.WriteLine("Category deleted!");
+                //Console.WriteLine("Category deleted!");
                 return true;
             }
         }

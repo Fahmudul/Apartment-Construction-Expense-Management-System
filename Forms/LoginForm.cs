@@ -13,10 +13,10 @@ public partial class LoginForm : Form
         InitializeComponent();
     }
 
-    // ── Event Handlers ────────────────────────────────────────
+    
     private void btnLogin_Click(object sender, EventArgs e)
     {
-        // Placeholder navigation — replace with real AuthService.Login() later
+      
         
         string email = txtEmail.Text.Trim().ToLower();
         string password = txtPassword.Text.Trim().ToLower();
@@ -42,7 +42,7 @@ public partial class LoginForm : Form
                 return;
             }
 
-            Console.WriteLine($"Password {user.Status}");
+            //Console.WriteLine($"Password {user.Status}");
 
             if (user.Status == "Approved")
             {
@@ -74,7 +74,7 @@ public partial class LoginForm : Form
         }
     }
 
-    // ── Navigation ────────────────────────────────────────────
+// Redirect user to registration form
     private void btnRegister_Click(object sender, EventArgs e)
     {
         var register = new RegisterForm();

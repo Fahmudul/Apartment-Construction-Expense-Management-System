@@ -151,7 +151,7 @@ partial class LoginForm
         {
             Text = "Register here", Font = UITheme.FontBase, ForeColor = UITheme.Primary,
             BackColor = Color.White, FlatStyle = FlatStyle.Flat,
-            Location = new Point(250, 385), AutoSize = true, Cursor = Cursors.Hand,
+            Location = new Point(280, 385), AutoSize = true, Cursor = Cursors.Hand,
         };
         btnRegister.FlatAppearance.BorderSize = 0;
         btnRegister.Click += btnRegister_Click;

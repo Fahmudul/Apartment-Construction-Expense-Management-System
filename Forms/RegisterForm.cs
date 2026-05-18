@@ -14,12 +14,7 @@ public partial class RegisterForm : Form
     // ── Event Handlers ────────────────────────────────────────
     private void btnCreate_Click(object sender, EventArgs e)
     {
-
-        Console.WriteLine($"Username {txtName.Text}");
-        Console.WriteLine($"Email {txtEmail.Text}");
-        Console.WriteLine($"Password {txtPassword.Text}");
-        Console.WriteLine($"Confirm Password {txtConfirm.Text}");
-
+                
         string name = txtName.Text;
         string email = txtEmail.Text;
         string password = txtPassword.Text;

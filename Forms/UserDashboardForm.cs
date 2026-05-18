@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using ApartmentWinForms.Services;
 
 namespace ApartmentWinForms.Forms;
 
@@ -33,6 +34,8 @@ public partial class UserDashboardForm : Form
 
     private void ShowDashboardContent()
     {
+        var (total, count) = ExpenseService.GetTotalExpensesByUser(AuthService.CurrentUser.UserID);
+        
         pnlContent.Controls.Clear();
 
         int x = 24, y = 24;
@@ -56,8 +59,8 @@ public partial class UserDashboardForm : Form
                 new System.Drawing.StringFormat { Alignment = System.Drawing.StringAlignment.Center });
         };
         var stTitle = Helpers.UITheme.MakeLabel("MY TOTAL EXPENSES", Helpers.UITheme.FontXS, Helpers.UITheme.TextMuted,   20, 18);
-        var stVal   = Helpers.UITheme.MakeLabel("৳ 3,24,800", new System.Drawing.Font("Segoe UI", 22f, System.Drawing.FontStyle.Bold), Helpers.UITheme.TextPrimary, 20, 42);
-        var stSub   = Helpers.UITheme.MakeLabel("Across 18 expense entries", Helpers.UITheme.FontSM, Helpers.UITheme.TextMuted, 20, 88);
+        var stVal   = Helpers.UITheme.MakeLabel($"৳ {total.ToString()}", new System.Drawing.Font("Segoe UI", 22f, System.Drawing.FontStyle.Bold), Helpers.UITheme.TextPrimary, 20, 42);
+        var stSub   = Helpers.UITheme.MakeLabel($"Across {count.ToString()} expense entries", Helpers.UITheme.FontSM, Helpers.UITheme.TextMuted, 20, 88);
         stTitle.BackColor = stVal.BackColor = stSub.BackColor = System.Drawing.Color.Transparent;
         statCard.Controls.AddRange(new System.Windows.Forms.Control[] { iconBox, stTitle, stVal, stSub });
         pnlContent.Controls.Add(statCard);
@@ -77,8 +80,7 @@ public partial class UserDashboardForm : Form
         dgv.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Category",   FillWeight = 20 });
         dgv.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Amount (৳)", FillWeight = 18 });
         dgv.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Date",       FillWeight = 14 });
-        dgv.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Edit",       FillWeight = 9,
-            Text = "Edit", UseColumnTextForButtonValue = true });
+       
         dgv.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Delete",     FillWeight = 9,
             Text = "Delete", UseColumnTextForButtonValue = true });
         dgv.Rows.Add("Cement bags - Block A", "Materials",  "45,000",  "2025-01-15");
