@@ -96,6 +96,6 @@
 -- SELECT 'Expenses'   AS TableName, COUNT(*) AS Rows FROM Expenses;
 -- GO
 
-select * from Users;
-
+UPDATE Users SET Status = 'Pending' where Email = 'rahima@corp.bd';
+-- select * from users;
 -- delete from Users where Email like 'fahmudul@';

@@ -55,15 +55,30 @@ public static class AuthService
     }
 
     // Called on startup or after login to check status
-    public static bool IsApproved(string email)
-    {
-        return false;
-    }
+    //public static bool IsApproved(string email)
+    //{
+    //    try {
+    //        User isUserExist = GetUserByEmail(email);
+    //        if (isUserExist == null) {
+    //            MessageBox.Show("User not found!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+    //            return false;
+    //        }
+    //        else
+    //        {
+    //            return isUserExist.Status == "Approved";
+    //        }
+    //    } catch (Exception e) { 
+    //        MessageBox.Show($"Error occured: {e.Message}")
+        
+    //    }
+    //    return false;
+    //}
 
     // Called to check if logged in user is admin
     public static bool IsAdmin()
     {
-        return false;
+
+        return CurrentUser.Role == "Admin";
     }
 
     public static bool IfUserAleadyExists(string email)
@@ -121,9 +136,7 @@ public static class AuthService
                     Status = userFound.GetString(userFound.GetOrdinal("Status")),
                     Password = userFound.GetString(userFound.GetOrdinal("Password"))
                 };
-                
-            
-                Console.WriteLine($"Frome line 114 {CurrentUser.Name}");
+               
 
                 return CurrentUser;
             }

@@ -20,8 +20,8 @@ static class Program
         Application.SetCompatibleTextRenderingDefault(false);
 
         // Open all screens at once for review
-        //new LoginForm().Show();
-        new RegisterForm().Show();
+        new LoginForm().Show();
+        //new RegisterForm().Show();
         //new PendingApprovalForm().Show();
         //new AdminDashboardForm().Show();
         //new AdminExpensesForm().Show();
