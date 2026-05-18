@@ -20,7 +20,8 @@ public static class AuthService
     // Called by Register button in RegisterForm
     public static bool Register(string name, string email, string password)
     {
-        try {
+        try
+        {
             using var conn = DatabaseHelper.GetSqlConnection();
 
             conn.Open();
@@ -33,12 +34,14 @@ public static class AuthService
             cmd.Parameters.AddWithValue("@Password", password);
 
             int rowsAffected = cmd.ExecuteNonQuery();
-            if (rowsAffected > 0) {
+            if (rowsAffected > 0)
+            {
                 //Console.WriteLine("User registered!");
                 return true;
-            }       
+            }
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             MessageBox.Show($"Error occured: {e.Message}",
                             "Error",
                             MessageBoxButtons.OK,
@@ -69,7 +72,7 @@ public static class AuthService
     //        }
     //    } catch (Exception e) { 
     //        MessageBox.Show($"Error occured: {e.Message}")
-        
+
     //    }
     //    return false;
     //}
@@ -83,7 +86,8 @@ public static class AuthService
 
     public static bool IfUserAleadyExists(string email)
     {
-        try {
+        try
+        {
             using var conn = DatabaseHelper.GetSqlConnection();
 
             conn.Open();
@@ -94,11 +98,14 @@ public static class AuthService
             cmd.Parameters.AddWithValue("@Email", email);
 
             object found = cmd.ExecuteScalar();
-            if (found != null) { 
+            if (found != null)
+            {
                 return true;
             }
-        
-        } catch (Exception e) {
+
+        }
+        catch (Exception e)
+        {
             MessageBox.Show($"Error occured: {e.Message}",
                             "Error",
                             MessageBoxButtons.OK,
@@ -107,13 +114,14 @@ public static class AuthService
         }
 
         return false;
-    
+
     }
 
 
     public static User? GetUserByEmail(string email)
     {
-        try {
+        try
+        {
             using var conn = DatabaseHelper.GetSqlConnection();
 
             conn.Open();
@@ -125,10 +133,11 @@ public static class AuthService
             cmd.Parameters.AddWithValue("@Email", email);
 
             using var userFound = cmd.ExecuteReader();
-            
-            if (userFound.Read()) {
 
-            CurrentUser = new User
+            if (userFound.Read())
+            {
+
+                CurrentUser = new User
                 {
                     Name = userFound.GetString(userFound.GetOrdinal("Name")),
                     Email = userFound.GetString(userFound.GetOrdinal("Email")),
@@ -136,20 +145,22 @@ public static class AuthService
                     Status = userFound.GetString(userFound.GetOrdinal("Status")),
                     Password = userFound.GetString(userFound.GetOrdinal("Password"))
                 };
-               
+
 
                 return CurrentUser;
             }
-                          
-        } catch (Exception e) {
+
+        }
+        catch (Exception e)
+        {
 
             MessageBox.Show($"Error occured: {e.Message}",
                             "Error",
                             MessageBoxButtons.OK,
                             MessageBoxIcon.Error);
         }
-        
+
         return null;
-    
+
     }
 }

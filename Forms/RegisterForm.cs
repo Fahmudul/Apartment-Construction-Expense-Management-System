@@ -11,6 +11,7 @@ public partial class RegisterForm : Form
         InitializeComponent();
     }
 
+    // ── Event Handlers ────────────────────────────────────────
     private void btnCreate_Click(object sender, EventArgs e)
     {
 

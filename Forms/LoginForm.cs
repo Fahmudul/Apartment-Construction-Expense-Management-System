@@ -74,6 +74,7 @@ public partial class LoginForm : Form
         }
     }
 
+    // ── Navigation ────────────────────────────────────────────
     private void btnRegister_Click(object sender, EventArgs e)
     {
         var register = new RegisterForm();
