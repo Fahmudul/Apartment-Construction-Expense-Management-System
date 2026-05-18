@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using ApartmentWinForms.Helpers;
+using ApartmentWinForms.Services;
 
 namespace ApartmentWinForms.Forms;
 
@@ -37,6 +38,20 @@ public partial class AdminDashboardForm : Form
 
     private void ShowDashboardContent()
     {
+        // Retrieve all statistics
+
+        // Retrive total number of categories
+        string categoryCount = CategoryService.GetTotalCategoriesCount().ToString();
+        
+        // Retrive total number of users
+        string totalUsers = UserService.GetTotalUsersCount().ToString();
+
+        // Retrive total number pending users
+        string pendingUsers = UserService.GetPendingUsersCount().ToString();
+
+        // Retrive total expenses
+        string totalExpenses = ExpenseService.GetTotalExpensesAmount().ToString();
+
         pnlContent.Controls.Clear();
 
         int x = 24, y = 24;
@@ -65,9 +80,9 @@ public partial class AdminDashboardForm : Form
 
         // Stat cards
         int cw = (w - 48) / 3;
-        AddStatCard(x,           y, cw, "💰", "TOTAL EXPENSES",  "৳ 18,42,500", "▲ 12.4% vs last month", UITheme.PrimaryLight);
-        AddStatCard(x + cw + 24, y, cw, "👤", "TOTAL USERS",     "24",           "3 pending approval",    Color.FromArgb(209, 250, 229));
-        AddStatCard(x + cw*2+48, y, cw, "🏷", "CATEGORIES",      "8",            "Active categories",     Color.FromArgb(254, 243, 199));
+        AddStatCard(x,           y, cw, "💰", "TOTAL EXPENSES",  $"৳ {totalExpenses}", "▲ 12.4% vs last month", UITheme.PrimaryLight);
+        AddStatCard(x + cw + 24, y, cw, "👤", "TOTAL USERS",     totalUsers,           $"{pendingUsers} pending approval",    Color.FromArgb(209, 250, 229));
+        AddStatCard(x + cw*2+48, y, cw, "🏷", "CATEGORIES", categoryCount,            "Active categories",     Color.FromArgb(254, 243, 199));
         y += 140;
 
         // Recent expenses table
