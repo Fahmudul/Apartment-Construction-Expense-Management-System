@@ -94,10 +94,13 @@ public partial class AdminDashboardForm : Form
         dgv.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Category",  FillWeight = 25 });
         dgv.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Amount",    FillWeight = 20 });
         dgv.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Added By",  FillWeight = 20 });
-        dgv.Rows.Add("Cement bags - Block A", "Materials",  "৳ 45,000",  "Rahima");
-        dgv.Rows.Add("Labour - Foundation",   "Labour",     "৳ 80,000",  "Karim");
-        dgv.Rows.Add("Crane Rental",          "Equipment",  "৳ 1,20,000","Admin");
-        dgv.Rows.Add("Wiring - 3rd Floor",    "Electrical", "৳ 32,500",  "Rahima");
+
+        var recentExpenses = ExpenseService.GetRecentExpenses(5);
+
+        foreach (var expense in recentExpenses)
+        {
+            dgv.Rows.Add(expense.Title, expense.CategoryName, $"৳ {expense.Amount:N0}", expense.UserName);
+        }
         tableCard.Controls.Add(dgv);
         pnlContent.Controls.Add(tableCard);
 
