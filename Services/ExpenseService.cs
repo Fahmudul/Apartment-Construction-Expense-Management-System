@@ -236,6 +236,91 @@ public static class ExpenseService
     // Called for Admin dashboard recent expenses table
     public static List<Expense> GetRecentExpenses(int count = 5)
     {
-        return new List<Expense>();
+        var expenses = new List<Expense>();
+
+        try
+        {    
+          
+            using var conn = DatabaseHelper.GetSqlConnection();
+            conn.Open();
+
+            string query = @" SELECT TOP (@count) e.ExpenseID, e.Title, c.CategoryName, e.Amount,
+                             u.Name FROM Expenses e INNER JOIN Users u ON e.UserID = u.UserID  
+                             INNER JOIN Categories c ON c.CategoryID = e.CategoryID WHERE e.ExpenseDate >= DATEADD(Day, -5, GETDATE()) ORDER BY e.ExpenseDate DESC      ";
+            using var cmd = new SqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@count", count);
+
+            using var response = cmd.ExecuteReader();
+
+            while (response.Read())
+            {
+                Expense expense = new Expense
+                {
+                    
+                    ExpenseID = response.GetGuid(response.GetOrdinal("ExpenseID")),
+                    Title = response.GetString(response.GetOrdinal("Title")),
+                    Amount = response.GetDecimal(response.GetOrdinal("Amount")),
+                    CategoryName = response.GetString(response.GetOrdinal("CategoryName")),
+                    UserName = response.GetString(response.GetOrdinal("Name")),
+                };
+
+                expenses.Add(expense);
+            }
+            
+        }
+        
+        catch (Exception e)
+        {
+
+            MessageBox.Show($"Error occured: {e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        return expenses;
+
+    }
+
+
+    public static List<Expense> GetRecentExpensesByUser(int count = 5)
+    {
+        var expenses = new List<Expense>();
+
+        try
+        {
+
+            using var conn = DatabaseHelper.GetSqlConnection();
+            conn.Open();
+
+            string query = @" SELECT TOP (@count) e.ExpenseID, e.Title, c.CategoryName, e.Amount,
+                             e.ExpenseDate FROM Expenses e INNER JOIN Users u ON e.UserID = u.UserID  
+                             INNER JOIN Categories c ON c.CategoryID = e.CategoryID WHERE e.UserID = @UserID AND e.ExpenseDate >= DATEADD(Day, -5, GETDATE()) ORDER BY e.ExpenseDate DESC      ";
+            using var cmd = new SqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@count", count);
+            cmd.Parameters.AddWithValue("@UserID", AuthService.CurrentUser.UserID);
+
+            using var response = cmd.ExecuteReader();
+
+            while (response.Read())
+            {
+                Expense expense = new Expense
+                {
+
+                    ExpenseID = response.GetGuid(response.GetOrdinal("ExpenseID")),
+                    Title = response.GetString(response.GetOrdinal("Title")),
+                    Amount = response.GetDecimal(response.GetOrdinal("Amount")),
+                    CategoryName = response.GetString(response.GetOrdinal("CategoryName")),
+                    ExpenseDate = response.GetDateTime(response.GetOrdinal("ExpenseDate")),
+                };
+
+                expenses.Add(expense);
+            }
+
+        }
+
+        catch (Exception e)
+        {
+
+            MessageBox.Show($"Error occured: {e.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        return expenses;
+
     }
 }

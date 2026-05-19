@@ -17,6 +17,7 @@ partial class UserDashboardForm
     private SidebarButton btnMyExpenses;
     private SidebarButton btnAddExpense;
     private Button btnLogout;
+    private DataGridView dgv;
 
     protected override void Dispose(bool disposing)
     {
