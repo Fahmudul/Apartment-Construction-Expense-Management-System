@@ -10,6 +10,7 @@ public partial class UserDashboardForm : Form
     {
         InitializeComponent();
         ShowDashboardContent();
+                
     }
 
     private void btnDashboard_Click(object sender, EventArgs e)  => ShowDashboardContent();
@@ -21,6 +22,8 @@ public partial class UserDashboardForm : Form
         new LoginForm().Show();
         Close();
     }
+
+
 
     private void ShowPanel(Form childForm)
     {
@@ -75,17 +78,17 @@ public partial class UserDashboardForm : Form
         addBtn.Click += (s, e) => new AddExpenseForm().ShowDialog();
         tableCard.Controls.Add(addBtn);
 
-        var dgv = Helpers.UITheme.MakeDataGrid(0, 66, tableCard.Width, 254);
+        dgv = Helpers.UITheme.MakeDataGrid(0, 66, tableCard.Width, 254);
         dgv.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Title",      FillWeight = 30 });
         dgv.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Category",   FillWeight = 20 });
         dgv.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Amount (৳)", FillWeight = 18 });
         dgv.Columns.Add(new DataGridViewTextBoxColumn { HeaderText = "Date",       FillWeight = 14 });
-       
-        dgv.Columns.Add(new DataGridViewButtonColumn  { HeaderText = "Delete",     FillWeight = 9,
-            Text = "Delete", UseColumnTextForButtonValue = true });
-        dgv.Rows.Add("Cement bags - Block A", "Materials",  "45,000",  "2025-01-15");
-        dgv.Rows.Add("Labour - Foundation",   "Labour",     "80,000",  "2025-01-16");
-        dgv.Rows.Add("Wiring - 3rd Floor",    "Electrical", "32,500",  "2025-01-20");
+     
+        var recentExpenses = ExpenseService.GetRecentExpensesByUser(7);
+        foreach (var expense in recentExpenses)
+        {
+            dgv.Rows.Add(expense.Title, expense.CategoryName, expense.Amount.ToString(), expense.ExpenseDate.ToShortDateString());
+        }
         tableCard.Controls.Add(dgv);
         pnlContent.Controls.Add(tableCard);
 

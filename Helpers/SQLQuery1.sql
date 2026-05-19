@@ -100,3 +100,16 @@
 -- select * from Users;
 -- delete from Categories where CategoryID = 'CF7AD22A-05B9-4C9E-B5F7-4B36C9733CF1';
 
+-- select * from Users;
+SELECT TOP (10) 
+    e.ExpenseID, 
+    e.Title, 
+    c.CategoryName, 
+    e.Amount,
+    e.ExpenseDate 
+FROM Expenses e 
+INNER JOIN Users u ON e.UserID = u.UserID  
+INNER JOIN Categories c ON c.CategoryID = e.CategoryID 
+WHERE e.UserID = '7D2601F5-63CC-498E-AA91-547791B8AE8D' 
+  AND e.ExpenseDate >= DATEADD(Day, -5, GETDATE()) 
+ORDER BY e.ExpenseDate DESC;
