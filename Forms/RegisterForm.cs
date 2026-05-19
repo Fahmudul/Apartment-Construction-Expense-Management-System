@@ -28,9 +28,9 @@ public partial class RegisterForm : Form
         // 5. Check Username, Email, password size is not more than given range
 
         // 1. If all fields are non empty
-        if (string.IsNullOrWhiteSpace(name) &&
-            string.IsNullOrWhiteSpace(email) &&
-            string.IsNullOrWhiteSpace(password) &&
+        if (string.IsNullOrWhiteSpace(name) ||
+            string.IsNullOrWhiteSpace(email) ||
+            string.IsNullOrWhiteSpace(password) ||
             string.IsNullOrWhiteSpace(confirmPassword))      
         {
             MessageBox.Show("All fields are required!");
