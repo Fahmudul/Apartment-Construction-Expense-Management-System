@@ -13,9 +13,9 @@ A desktop application built with **C# Windows Forms (.NET 10)** for managing con
 | Name | Student ID | Contribution |
 |------|-----------|-------------|
 | Fahmudul Hassan Siam *(Team Leader)* | 24-58097-2 | Project skeleton, database setup, helper utilities, category management, user service, authentication (partial) |
-| Sobuj Paul | 24-59609-3 | Expense management (add, view, delete), user and admin both can see recent expenses |
+| Sabuj Kumar Paul | 24-59609-3 | Expense management (add, view, delete), user and admin both can see recent expenses |
 | Padmasree Saha | 24-59331-3 | Authentication service (login, register, approval workflow) |
-| Progra Hossain | 23-51944-2 | Dashboard statistics, expense views for both admin and user |
+| Progma Hossain | 23-51944-2 | Dashboard statistics, expense views for both admin and user |
 
 ---
 
